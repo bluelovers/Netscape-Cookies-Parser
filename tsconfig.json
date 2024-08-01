@@ -1,22 +1,8 @@
 {
-    "compilerOptions": {
-      "strict": false,
-      "moduleResolution": "node",
-      "removeComments": false,
-      "alwaysStrict": true,
-      "pretty": true,
-      "target": "es2021",
-      "lib": ["ES2021", "ES2015"],
-      "sourceMap": true,
-      "inlineSources": true,
-      "module": "commonjs",
-      "declaration": true,
-      "declarationMap": true,
-      "outDir": "dist",
-      "esModuleInterop": true,
-      "skipLibCheck": true,
-      "resolveJsonModule": true
-    },
-    "include": ["src/**/**/*.ts"]
-  }
-  
+  "extends": "@bluelovers/tsconfig/tsdx/index.json",
+  "compilerOptions": {},
+  "exclude": [
+    "dist",
+    "test"
+  ]
+}

@@ -1,4 +1,4 @@
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "fs";
 import { Cookies } from "../types/Cookies";
 
 
@@ -15,7 +15,7 @@ export class CookieJar {
 
     /**
      * Loads a cookie file from the provided path
-     * @param String path 
+     * @param String path
      * @returns File Content in UTF8 format
      */
 

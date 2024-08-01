@@ -2,30 +2,97 @@
   "name": "netscape-cookies-parser",
   "version": "1.0.3",
   "description": "A small light weight library that parses Netscape HTTP Cookies ",
-  "main": "dist/main.js",
-  "directories": {
-    "doc": "docs"
-  },
-  "scripts": {
-    "build": "npx tsup"
+  "keywords": [
+    "netscape-http-parser",
+    "create-by-yarn-tool",
+    "create-by-tsdx"
+  ],
+  "homepage": "https://github.com/bluelovers/Netscape-Cookies-Parser#readme",
+  "bugs": {
+    "url": "https://github.com/bluelovers/Netscape-Cookies-Parser/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/naseif/Netscape-Cookies-Parser.git"
+    "url": "git+https://github.com/bluelovers/Netscape-Cookies-Parser.git"
   },
-  "keywords": [
-    "netscape-http-parser"
-  ],
-  "author": "naseif",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/naseif/Netscape-Cookies-Parser/issues"
+  "author": "naseif",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.esm.mjs"
+    },
+    "./package.json": "./package.json",
+    "./src/*": "./src/*"
   },
-  "homepage": "https://github.com/naseif/Netscape-Cookies-Parser#readme",
+  "main": "dist/index.cjs",
+  "unpkg": "dist/index.umd.production.min.cjs",
+  "module": "dist/index.esm.mjs",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
+  "directories": {
+    "doc": "docs",
+    "test": "test"
+  },
+  "scripts": {
+    "coverage": "yarn run test -- --coverage",
+    "pretest": "echo pretest",
+    "test": "yarn run test:jest",
+    "test:jest": "jest --passWithNoTests",
+    "test:jest:clearCache": "jest --clearCache",
+    "test:jest:coverage": "yarn run test:jest -- --coverage",
+    "test:jest:snapshot": "yarn run test:jest -- -u",
+    "test:snapshot": "yarn run test -- -u",
+    "test:tsd": "ynpx tsd",
+    "posttest": "yarn run build",
+    "install:frozenLockfile": "yarn-tool install --frozen-lockfile",
+    "install:resetLockfile": "yarn-tool install --reset-lockfile",
+    "build": "yarn run build:tsdx && yarn run build:dts:bundle",
+    "build:dts:bundle": "ynpx @bluelovers/dts-bundle-generator -o ./dist/index.d.ts ./src/index.ts --no-banner --inline-declare-global & echo build:dts:bundle",
+    "build:dts:copy": "copy .\\src\\index.d.ts .\\dist\\index.d.ts & echo build:dts",
+    "build:dts:tsc": "yarn run build:dts:copy && yarn run build:dts:tsc:emit && yarn run build:dts:copy",
+    "build:dts:tsc:emit": "tsc --emitDeclarationOnly --declaration --noEmit false",
+    "build:tsdx": "pnpx @bluelovers/tsdx build --target node",
+    "ci:install": "yarn install --frozen-lockfile && yarn add -W yarn-tool lerna@6 ynpx ts-node ts-jest jest typescript@next @bluelovers/jest-config tsx",
+    "ci:build": "echo ci:build",
+    "npm:publish": "npm publish",
+    "npm:publish:bump": "yarn run version:bump && npm publish",
+    "npm:publish:bump:major": "yarn run version:bump:major && npm publish",
+    "npm:publish:bump:minor": "yarn run version:bump:minor && npm publish",
+    "npm:publish:bump:patch": "yarn run version:bump:patch && npm publish",
+    "npm:publish:bump:prerelease": "yarn run version:bump:prerelease && npm publish",
+    "ws:fix-all": "yarn-tool fix-all  --overwriteHostedGitInfo",
+    "ws:fix-all:resetStaticFiles": "yarn run ws:fix-all -- --resetStaticFiles",
+    "preversion": "echo preversion && yarn run test",
+    "version": "echo version",
+    "version:bump": "yarn-tool version",
+    "version:bump:major": "yarn run version:bump -- --bump major",
+    "version:bump:minor": "yarn run version:bump -- --bump minor",
+    "version:bump:patch": "yarn run version:bump -- --bump patch",
+    "version:bump:prerelease": "yarn run version:bump -- --bump prerelease",
+    "postversion": "echo postversion",
+    "prepublish": "echo prepublish",
+    "prepare": "echo prepare",
+    "prepublishOnly": "yarn run preversion",
+    "prepublishOnly:check-bin": "ynpx --quiet @yarn-tool/check-pkg-bin",
+    "prepack": "echo prepack",
+    "pack": "echo pack",
+    "postpack": "echo postpack",
+    "publish": "echo publish",
+    "postpublish": "yarn run postpublish:changelog && yarn run postpublish:git:commit && yarn run postpublish:git:tag && yarn run postpublish:git:push",
+    "postpublish:changelog": "ynpx --quiet @yarn-tool/changelog && git add ./CHANGELOG.md",
+    "postpublish:git:commit": "git commit -m \"chore(release): publish\" . & echo postpublish:git:commit",
+    "postpublish:git:push": "git push --follow-tags",
+    "postpublish:git:tag": "ynpx --quiet @yarn-tool/tag",
+    "postpublishOnly": "echo postpublishOnly",
+    "ncu": "yarn-tool ncu -u",
+    "tsc:showConfig": "ynpx get-current-tsconfig -p"
+  },
   "devDependencies": {
-    "@types/node": "^18.11.18",
-    "tsup": "^6.5.0",
-    "typedoc": "^0.23.25",
-    "typescript": "^4.9.4"
-  }
+    "@bluelovers/tsconfig": "^1.0.35",
+    "@types/node": "^22.0.2"
+  },
+  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e"
 }
